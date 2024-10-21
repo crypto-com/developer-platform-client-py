@@ -15,7 +15,7 @@ def get_block_by_tag(chain_id: str, api_key: str, block_tag: str, tx_detail: str
     :rtype: ApiResponse
     :raises Exception: If the block retrieval fails or the server responds with an error.
     """
-    url = f"""http://localhost:8000/v1/cdc-developer-platform/block/{
+    url = f"""https://developer-platform-api.crypto.com/v1/cdc-developer-platform/block/{
         chain_id}/block-tag?blockTag={block_tag}&txDetail={tx_detail}&apiKey={api_key}"""
 
     response = requests.get(url, headers={'Content-Type': 'application/json'})

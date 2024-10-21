@@ -14,7 +14,7 @@ def get_contract_abi(chain_id: str, api_key: str, contract_address: str) -> ApiR
     :rtype: ApiResponse
     :raises Exception: If the contract ABI retrieval fails or the server responds with an error.
     """
-    url = f"""http://localhost:8000/v1/cdc-developer-platform/contract/{
+    url = f"""https://developer-platform-api.crypto.com/v1/cdc-developer-platform/contract/{
         chain_id}/contract-abi?contractAddress={contract_address}&apiKey={api_key}"""
 
     response = requests.get(url, headers={'Content-Type': 'application/json'})

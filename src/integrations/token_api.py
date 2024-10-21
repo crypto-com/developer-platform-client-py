@@ -15,7 +15,7 @@ def get_native_token_balance(chain_id: str, api_key: str, address: str) -> ApiRe
     :return: The native token balance.
     :rtype: ApiResponse
     """
-    url = f"""http://localhost:8000/v1/cdc-developer-platform/token/{
+    url = f"""https://developer-platform-api.crypto.com/v1/cdc-developer-platform/token/{
         chain_id}/native-token-balance?address={address}&apiKey={api_key}"""
 
     response = requests.get(url, headers={'Content-Type': 'application/json'})
@@ -42,7 +42,7 @@ def get_erc20_token_balance(chain_id: str, api_key: str, address: str, contract_
     :return: The ERC20 token balance.
     :rtype: ApiResponse
     """
-    url = f"""http://localhost:8000/v1/cdc-developer-platform/token/{
+    url = f"""https://developer-platform-api.crypto.com/v1/cdc-developer-platform/token/{
         chain_id}/erc20-token-balance?address={
         address}&contractAddress={contract_address}&blockHeight={block_height}&apiKey={api_key}"""
 
@@ -67,7 +67,7 @@ def transfer_token(chain_id: str, payload: dict) -> ApiResponse:
     :param provider: The provider for the transfer.
     :return: The transfer response.
     """
-    url = f"http://localhost:8000/v1/cdc-developer-platform/token/{
+    url = f"https://developer-platform-api.crypto.com/v1/cdc-developer-platform/token/{
         chain_id}/transfer"
 
     response = requests.post(
@@ -95,7 +95,7 @@ def wrap_token(chain_id: str, payload: dict) -> ApiResponse:
     :param provider: The provider for the wrap.
     :return: The wrap response.
     """
-    url = f"""http://localhost:8000/v1/cdc-developer-platform/token/{
+    url = f"""https://developer-platform-api.crypto.com/v1/cdc-developer-platform/token/{
         chain_id}/wrap"""
 
     response = requests.post(
@@ -122,7 +122,7 @@ def swap_token(chain_id: str, payload: dict) -> ApiResponse:
     :param provider: The provider for the swap.
     :return: The swap response.
     """
-    url = f"""http://localhost:8000/v1/cdc-developer-platform/token/{
+    url = f"""https://developer-platform-api.crypto.com/v1/cdc-developer-platform/token/{
         chain_id}/swap"""
 
     response = requests.post(
