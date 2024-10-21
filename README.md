@@ -29,7 +29,7 @@ from crypto-com-developer-platform-client import Block, Client
 from crypto-com-developer-platform-client.interfaces.chain_interfaces import CronosZkEvm
 
 
-Client.init(api_key="YOUR_OPEN_AI_API_KEY",
+Client.init(api_key="EXPLORER_API_KEY",
             chain_id=CronosZkEvm.TESTNET,provider="YOUR_PROVIDER")
 
 block = Block.get_by_tag("latest")
