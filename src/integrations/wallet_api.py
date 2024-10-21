@@ -13,7 +13,7 @@ def create_wallet() -> ApiResponse:
     :rtype: ApiResponse
     :raises Exception: If the wallet creation fails or the server responds with an error.
     """
-    url = f"""http://localhost:8000/v1/cdc-developer-platform/wallet"""
+    url = f"""https://developer-platform-api.crypto.com/v1/cdc-developer-platform/wallet"""
 
     try:
         response = requests.post(
@@ -39,7 +39,7 @@ def get_balance(chain_id: str, address: str, api_key: str) -> ApiResponse:
     :rtype: ApiResponse
     :raises Exception: If the fetch request fails or the server responds with an error message.
     """
-    url = f"""http://localhost:8000/v1/cdc-developer-platform/wallet/{
+    url = f"""https://developer-platform-api.crypto.com/v1/cdc-developer-platform/wallet/{
         chain_id}/balance?address={address}&api_key={api_key}"""
 
     try:
