@@ -17,7 +17,7 @@ class CronosZkEvm(str, Enum):
     Chain IDs for Cronos ZK EVM (Mainnet and Testnet).
     """
     MAINNET = "388"
-    TESTNET = "282"
+    TESTNET = "240"
 
     def __str__(self):
         return self.value
