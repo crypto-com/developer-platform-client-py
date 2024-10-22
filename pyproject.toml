@@ -1,14 +1,14 @@
 [tool.poetry]
-name = "developer-platform-client-py"
+name = "crypto-com-developer-platform-client-py"
 version = "1.0.1"
 description = "A python client to interact with @cryptocom/developer-platform-service"
 authors = ["Ric Arcifa <ricardo.arcifa@crypto.com>"]
 license = "MIT"
-keywords = ["agent", "blockchain", "crypto.com", "AI", "CDC"]
+keywords = ["blockchain", "crypto.com", "tool", "SDK"]
 readme = "README.md"
 homepage = "https://github.com/crypto-com/developer-platform-client-py"
 repository = "https://github.com/crypto-com/developer-platform-client-py"
-documentation = "https://github.com/crypto-com/developer-platform-client-py"
+documentation = "https://github.com/crypto-com/developer-platform-client-py#readme"
 
 [tool.poetry.dependencies]
 python = "^3.8.1"
@@ -45,4 +45,4 @@ exclude = '''
 profile = "black"
 
 [tool.poetry.scripts]
-cdc-ai-agent-client = "developer-platform-client-py.cli:main"
+cryptocom-developer-platform-client = "cryptocom-developer-platform-client.cli:main"
