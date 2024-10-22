@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "developer-platform-client-py"
-version = "0.0.0-beta"
+version = "1.0.1"
 description = "A python client to interact with @cryptocom/developer-platform-service"
 authors = ["Ric Arcifa <ricardo.arcifa@crypto.com>"]
 license = "MIT"
