@@ -2,7 +2,7 @@
 
 The Crypto.com Python Client for Developer Platform is a Python library designed to facilitate easy and efficient interactions with the Crypto.com [Developer Platform Service](https://github.com/crypto-com/developer-platform-service). This client library provides methods to interact with various blockchain networks, manage wallets, tokens, and contracts seamlessly.
 
-![PyPI](https://img.shields.io/pypi/v/crypto-com-developer-platform-client)
+![PyPI](https://pypi.org/project/developer-platform-client-py)
 
 ## Features
 
@@ -15,7 +15,7 @@ The Crypto.com Python Client for Developer Platform is a Python library designed
 To install the package, run the following command:
 
 ```bash
-pip install crypto-com-developer-platform-client
+pip install developer_platform_client_py
 ```
 
 ## Usage
@@ -25,8 +25,8 @@ Here’s how you can use the Crypto.com Python Client for Developer Platform in 
 ### Configuring the Client
 
 ```py
-from crypto-com-developer-platform-client import Block, Client
-from crypto-com-developer-platform-client.interfaces.chain_interfaces import CronosZkEvm
+from developer_platform_client_py import Block, Client
+from developer_platform_client_py.interfaces.chain_interfaces import CronosZkEvm
 
 
 Client.init(api_key="EXPLORER_API_KEY",
