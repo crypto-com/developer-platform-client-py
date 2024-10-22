@@ -1,21 +1,24 @@
-# Crypto.com Python Client for Developer Platform
+# Crypto.com Developer Platform Client.py
 
-The Crypto.com Python Client for Developer Platform is a Python library designed to facilitate easy and efficient interactions with the Crypto.com [Developer Platform Service](https://github.com/crypto-com/developer-platform-service). This client library provides methods to interact with various blockchain networks, manage wallets, tokens, and contracts seamlessly.
+The **Crypto.com Developer Platform Client.py** is a pyton SDK designed to interact seamlessly with the Crypto.com Developer Platform Service API. This client library simplifies interactions with the Cronos blockchain, supporting native tokens, ERC20 tokens, smart contracts, transactions, blocks, and wallets.
 
 ![PyPI](https://pypi.org/project/developer-platform-client-py)
 
 ## Features
 
-- Simple and intuitive API for interacting with the Crypto.com Developer Platform Service.
-- Configurable client instances tailored to your specific endpoint and security needs.
-- **Currently in beta**: Expect frequent updates and potential changes in future releases.
+- Simple and intuitive API for interacting with Cronos blockchain networks.
+- Supports token balances (native & ERC20), token transfers, wrapping, and swapping.
+- Transaction queries by address or hash, and fetching transaction statuses.
+- Smart contract ABI fetching by contract address.
+- Wallet creation and balance management.
+- Supports **Cronos EVM** and **Cronos ZK EVM** chains.
 
 ## Installation
 
 To install the package, run the following command:
 
 ```bash
-pip install developer_platform_client_py
+pip install crypto-com-developer-platform-client
 ```
 
 ## Usage
@@ -25,8 +28,8 @@ Here’s how you can use the Crypto.com Python Client for Developer Platform in 
 ### Configuring the Client
 
 ```py
-from developer_platform_client_py import Block, Client
-from developer_platform_client_py.interfaces.chain_interfaces import CronosZkEvm
+from crypto-com-developer-platform-client import Block, Client
+from crypto-com-developer-platform-client.interfaces.chain_interfaces import CronosZkEvm
 
 
 Client.init(api_key="EXPLORER_API_KEY",
