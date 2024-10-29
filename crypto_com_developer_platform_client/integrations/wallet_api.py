@@ -40,7 +40,7 @@ def get_balance(chain_id: str, address: str, api_key: str) -> ApiResponse:
     :raises Exception: If the fetch request fails or the server responds with an error message.
     """
     url = f"""https://developer-platform-api.crypto.com/v1/cdc-developer-platform/wallet/{
-        chain_id}/balance?address={address}&api_key={api_key}"""
+        chain_id}/balance?address={address}&apiKey={api_key}"""
 
     try:
         response = requests.get(
