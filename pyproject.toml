@@ -45,4 +45,4 @@ exclude = '''
 profile = "black"
 
 [tool.poetry.scripts]
-cryptocom-developer-platform-client = "cryptocom-developer-platform-client.cli:main"
+cryptocom-developer-platform-client = "crypto_com_developer_platform_client.cli:main"
