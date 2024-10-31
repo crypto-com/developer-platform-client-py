@@ -52,12 +52,13 @@ class Token:
         return get_erc20_token_balance(chain_id, api_key, address, contract_address, block_height)
 
     @classmethod
-    def transfer_token(cls, to: str, amount: int) -> ApiResponse:
+    def transfer_token(cls, to: str, amount: int, contract_address: str = '') -> ApiResponse:
         """
         Transfer a token to another address.
 
         :param to: The address to transfer the token to.
         :param amount: The amount of the token to transfer.
+        :param contract_address: Optional. The contract address of the token to transfer.
         :return: The transaction hash.
         """
         chain_id = cls._client.get_chain_id()
@@ -66,39 +67,34 @@ class Token:
             "amount": amount,
             "provider": cls._client.get_provider(),
         }
+        if contract_address:
+            payload["contractAddress"] = contract_address
         return transfer_token(chain_id, payload)
 
     @classmethod
-    def wrap_token(cls, from_contract_address: str, to_contract_address: str, to: str, amount: int) -> ApiResponse:
+    def wrap_token(cls, amount: float) -> ApiResponse:
         """
         Wrap a token to another address.
 
-        :param from_contract_address: The address of the token to wrap.
-        :param to_contract_address: The address to wrap the token to.
-        :param to: The address to send the wrapped token to
         :param amount: The amount of the token to wrap.
         :return: The transaction hash.
         """
         chain_id = cls._client.get_chain_id()
         payload = {
-            "fromContractAddress": from_contract_address,
-            "toContractAddress": to_contract_address,
             "amount": amount,
-            "to": to,
             "provider": cls._client.get_provider(),
         }
 
         return wrap_token(chain_id, payload)
 
     @classmethod
-    def swap_token(cls, from_contract_address: str, to_contract_address: str, to: str, amount: int) -> ApiResponse:
+    def swap_token(cls, from_contract_address: str, to_contract_address: str, amount: int) -> ApiResponse:
         """
         Swap a token for another token.
 
         :param from_contract_address: The token to swap from.
         :param to_contract_address: The token to swap to.
         :param amount: The amount of the token to swap.
-        :param to: The address to send the swapped token to
         :return: The transaction hash.
         """
         chain_id = cls._client.get_chain_id()
@@ -106,7 +102,6 @@ class Token:
             "fromContractAddress": from_contract_address,
             "toContractAddress": to_contract_address,
             "amount": amount,
-            "to": to,
             "provider": cls._client.get_provider(),
         }
 
