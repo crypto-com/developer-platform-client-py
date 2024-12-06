@@ -27,12 +27,14 @@ class Client:
         from .token import Token
         from .transaction import Transaction
         from .wallet import Wallet
-
+        from .exchange import Exchange
+        
         Contract.init(cls())
         Wallet.init(cls())
         Block.init(cls())
         Transaction.init(cls())
         Token.init(cls())
+        Exchange.init(cls())
 
     @classmethod
     def get_api_key(cls) -> str:
