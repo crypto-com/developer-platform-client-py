@@ -14,7 +14,7 @@ def get_whitelisted_tokens(project: str, api_key: str) -> ApiResponse:
     :return: List of whitelisted tokens
     :raises Exception: If the request fails or server responds with an error
     """
-    url = f"""http://localhost:8001/v1/cdc-developer-platform/defi/whitelisted-tokens/{
+    url = f"""https://developer-platform-api.crypto.com/v1/cdc-developer-platform/defi/whitelisted-tokens/{
         project}?apiKey={api_key}"""
 
     try:
@@ -41,7 +41,7 @@ def get_all_farms(project: str, api_key: str) -> ApiResponse:
     :return: List of all farms
     :raises Exception: If the request fails or server responds with an error
     """
-    url = f"""http://localhost:8001/v1/cdc-developer-platform/defi/farms/{
+    url = f"""https://developer-platform-api.crypto.com/v1/cdc-developer-platform/defi/farms/{
         project}?apiKey={api_key}"""
 
     try:
@@ -69,7 +69,7 @@ def get_farm_by_symbol(project: str, symbol: str, api_key: str) -> ApiResponse:
     :return: Information about the specific farm
     :raises Exception: If the request fails or server responds with an error
     """
-    url = f"""http://localhost:8001/v1/cdc-developer-platform/defi/farms/{
+    url = f"""https://developer-platform-api.crypto.com/v1/cdc-developer-platform/defi/farms/{
         project}/{symbol}?apiKey={api_key}"""
 
     try:
