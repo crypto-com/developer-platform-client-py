@@ -67,8 +67,8 @@ def transfer_token(chain_id: str, payload: dict) -> ApiResponse:
     :param provider: The provider for the transfer.
     :return: The transfer response.
     """
-    url = f"https://developer-platform-api.crypto.com/v1/cdc-developer-platform/token/{
-        chain_id}/transfer"
+    url = f"""https://developer-platform-api.crypto.com/v1/cdc-developer-platform/token/{
+        chain_id}/transfer"""
 
     response = requests.post(
         url,
