@@ -1,5 +1,3 @@
-from typing import Optional
-
 from .client import Client
 from .integrations.api_interfaces import ApiResponse
 from .integrations.defi_api import (

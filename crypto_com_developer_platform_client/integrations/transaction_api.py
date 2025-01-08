@@ -1,5 +1,3 @@
-from typing import Any, Dict
-
 import requests
 
 from ..constants import API_URL
