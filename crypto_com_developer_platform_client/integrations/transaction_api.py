@@ -1,11 +1,24 @@
+from typing import Any, Dict
+
 import requests
 
+from ..constants import API_URL
 from .api_interfaces import ApiResponse
 
 
 def get_transactions_by_address(chain_id: str, address: str, session: str, limit: str, api_key: str) -> ApiResponse:
-    url = f"""https://developer-platform-api.crypto.com/v1/cdc-developer-platform/transaction/{
-        chain_id}/address?address={address}&session={session}&limit={limit}&apiKey={api_key}"""
+    """
+    Get transactions by address.
+
+    :param chain_id: The ID of the blockchain network
+    :param address: The address to get transactions for (CronosIds with the `.cro` suffix are supported, e.g. `xyz.cro`)
+    :param session: The session to get transactions for.
+    :param limit: The limit of transactions to get.
+    :param api_key: The API key for authentication.
+    :return: The transactions for the address.
+    :rtype: ApiResponse
+    """
+    url = f"{API_URL}/transaction/{chain_id}/address?address={address}&session={session}&limit={limit}&apiKey={api_key}"
 
     response = requests.get(url, headers={'Content-Type': 'application/json'})
 
@@ -20,8 +33,16 @@ def get_transactions_by_address(chain_id: str, address: str, session: str, limit
 
 
 def get_transaction_by_hash(chain_id: str, tx_hash: str, api_key: str) -> ApiResponse:
-    url = f"""https://developer-platform-api.crypto.com/v1/cdc-developer-platform/transaction/{
-        chain_id}/tx-hash?txHash={tx_hash}&apiKey={api_key}"""
+    """
+    Get transaction by hash.
+
+    :param chain_id: The ID of the blockchain network
+    :param tx_hash: The hash of the transaction.
+    :param api_key: The API key for authentication.
+    :return: The transaction details.
+    :rtype: ApiResponse
+    """
+    url = f"{API_URL}/transaction/{chain_id}/tx-hash?txHash={tx_hash}&apiKey={api_key}"
 
     response = requests.get(url, headers={'Content-Type': 'application/json'})
 
@@ -36,8 +57,16 @@ def get_transaction_by_hash(chain_id: str, tx_hash: str, api_key: str) -> ApiRes
 
 
 def get_transaction_status(chain_id: str, tx_hash: str, api_key: str) -> ApiResponse:
-    url = f"""https://developer-platform-api.crypto.com/v1/cdc-developer-platform/transaction/{
-        chain_id}/status?txHash={tx_hash}&apiKey={api_key}"""
+    """
+    Get transaction status.
+
+    :param chain_id: The ID of the blockchain network
+    :param tx_hash: The hash of the transaction.
+    :param api_key: The API key for authentication.
+    :return: The transaction status.
+    :rtype: ApiResponse
+    """
+    url = f"{API_URL}/transaction/{chain_id}/status?txHash={tx_hash}&apiKey={api_key}"
 
     response = requests.get(url, headers={'Content-Type': 'application/json'})
 

@@ -33,7 +33,7 @@ class Wallet:
         """
         Get the balance of a wallet.
 
-        :param address: The address to get the balance for.
+        :param address: The address to get the balance for (CronosIds with the `.cro` suffix are supported, e.g. `xyz.cro`)
         :return: The balance of the wallet.
         """
         chain_id = cls._client.get_chain_id()

@@ -1,5 +1,3 @@
-
-
 class Client:
     """
     Client class for managing API key, chain ID and provider.
@@ -24,6 +22,7 @@ class Client:
 
         from .block import Block
         from .contract import Contract
+        from .cronosid import CronosId
         from .defi import Defi
         from .exchange import Exchange
         from .token import Token
@@ -37,6 +36,7 @@ class Client:
         Token.init(cls())
         Exchange.init(cls())
         Defi.init(cls())
+        CronosId.init(cls())
 
     @classmethod
     def get_api_key(cls) -> str:
