@@ -30,7 +30,7 @@ class Token:
         """
         Get the native token balance for a given address.
 
-        :param address: The address to get the balance for.
+        :param address: The address to get the balance for (CronosIds with the `.cro` suffix are supported, e.g. `xyz.cro`)
         :return: The balance of the native token.
         """
         chain_id = cls._client.get_chain_id()
@@ -42,7 +42,7 @@ class Token:
         """
         Get the ERC20 token balance for a given address and contract address.
 
-        :param address: The address to get the balance for.
+        :param address: The address to get the balance for (CronosIds with the `.cro` suffix are supported, e.g. `xyz.cro`)
         :param contract_address: The contract address to get the balance for.
         :param block_height: The block height to get the balance for.
         :return: The balance of the ERC20 token.
@@ -56,7 +56,7 @@ class Token:
         """
         Transfer a token to another address.
 
-        :param to: The address to transfer the token to.
+        :param to: The address to transfer the token to (CronosIds with the `.cro` suffix are supported, e.g. `xyz.cro`)
         :param amount: The amount of the token to transfer.
         :param contract_address: Optional. The contract address of the token to transfer.
         :return: The transaction hash.

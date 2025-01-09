@@ -28,7 +28,7 @@ class Transaction:
         """
         Get transactions by address.
 
-        :param address: The address to get transactions for.
+        :param address: The address to get transactions for (CronosIds with the `.cro` suffix are supported, e.g. `xyz.cro`)
         :return: The transactions for the address.
         """
         chain_id = cls._client.get_chain_id()

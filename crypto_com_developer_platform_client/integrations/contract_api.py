@@ -1,5 +1,6 @@
 import requests
 
+from ..constants import API_URL
 from .api_interfaces import ApiResponse
 
 
@@ -14,10 +15,9 @@ def get_contract_abi(chain_id: str, api_key: str, contract_address: str) -> ApiR
     :rtype: ApiResponse
     :raises Exception: If the contract ABI retrieval fails or the server responds with an error.
     """
-    url = f"""https://developer-platform-api.crypto.com/v1/cdc-developer-platform/contract/{
-        chain_id}/contract-abi?contractAddress={contract_address}&apiKey={api_key}"""
+    url = f"{API_URL}/contract/{chain_id}/contract-abi?contractAddress={contract_address}&apiKey={api_key}"
 
-    response = requests.get(url, headers={'Content-Type': 'application/json'})
+    response = requests.get(url, headers={'Content-Type': 'application/json'}, timeout=15)
 
     if response.status_code not in (200, 201):
         error_body = response.json()

@@ -1,5 +1,6 @@
 import requests
 
+from ..constants import API_URL
 from .api_interfaces import ApiResponse
 
 
@@ -10,9 +11,9 @@ def get_all_tickers() -> ApiResponse:
     :return: A list of all available tickers and their information.
     :raises Exception: If the ticker retrieval fails or the server responds with an error.
     """
-    url = f"""https://developer-platform-api.crypto.com/v1/cdc-developer-platform/exchange/tickers"""
+    url = f"{API_URL}/exchange/tickers"
 
-    response = requests.get(url, headers={'Content-Type': 'application/json'})
+    response = requests.get(url, headers={'Content-Type': 'application/json'}, timeout=15)
 
     if response.status_code not in (200, 201):
         error_body = response.json()
@@ -33,10 +34,9 @@ def get_ticker_by_instrument(instrument_name: str) -> ApiResponse:
     :return: Ticker information for the specified instrument.
     :raises Exception: If the ticker retrieval fails, does not exist or the server responds with an error.
     """
-    url = f"""https://developer-platform-api.crypto.com/v1/cdc-developer-platform/exchange/tickers/{
-        instrument_name}"""
+    url = f"{API_URL}/exchange/tickers/{instrument_name}"
 
-    response = requests.get(url, headers={'Content-Type': 'application/json'})
+    response = requests.get(url, headers={'Content-Type': 'application/json'}, timeout=15)
 
     if response.status_code not in (200, 201):
         error_body = response.json()

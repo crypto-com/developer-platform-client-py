@@ -1,6 +1,7 @@
 from .block import Block
 from .client import Client
 from .contract import Contract
+from .cronosid import CronosId
 from .defi import Defi
 from .exchange import Exchange
 from .interfaces.chain_interfaces import CronosEvm, CronosZkEvm
@@ -21,4 +22,5 @@ __all__ = [
     "Exchange",
     "Defi",
     "DefiProtocol",
+    "CronosId",
 ]
