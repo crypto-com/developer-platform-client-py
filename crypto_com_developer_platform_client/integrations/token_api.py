@@ -16,7 +16,7 @@ def get_native_token_balance(chain_id: str, api_key: str, address: str) -> ApiRe
     """
     url = f"{API_URL}/token/{chain_id}/native-token-balance?address={address}&apiKey={api_key}"
 
-    response = requests.get(url, headers={'Content-Type': 'application/json'})
+    response = requests.get(url, headers={'Content-Type': 'application/json'}, timeout=15)
 
     if response.status_code not in (200, 201):
         error_body = response.json()
@@ -42,7 +42,7 @@ def get_erc20_token_balance(chain_id: str, api_key: str, address: str, contract_
     """
     url = f"{API_URL}/token/{chain_id}/erc20-token-balance?address={address}&contractAddress={contract_address}&blockHeight={block_height}&apiKey={api_key}"
 
-    response = requests.get(url, headers={'Content-Type': 'application/json'})
+    response = requests.get(url, headers={'Content-Type': 'application/json'}, timeout=15)
 
     if response.status_code not in (200, 201):
         error_body = response.json()
@@ -68,7 +68,8 @@ def transfer_token(chain_id: str, payload: dict) -> ApiResponse:
     response = requests.post(
         url,
         json=payload,
-        headers={'Content-Type': 'application/json'}
+        headers={'Content-Type': 'application/json'},
+        timeout=15
     )
 
     if response.status_code not in (200, 201):
@@ -95,7 +96,8 @@ def wrap_token(chain_id: str, payload: dict) -> ApiResponse:
     response = requests.post(
         url,
         json=payload,
-        headers={'Content-Type': 'application/json'}
+        headers={'Content-Type': 'application/json'},
+        timeout=15
     )
 
     if response.status_code not in (200, 201):
@@ -121,7 +123,8 @@ def swap_token(chain_id: str, payload: dict) -> ApiResponse:
     response = requests.post(
         url,
         json=payload,
-        headers={'Content-Type': 'application/json'}
+        headers={'Content-Type': 'application/json'},
+        timeout=15
     )
 
     if response.status_code not in (200, 201):

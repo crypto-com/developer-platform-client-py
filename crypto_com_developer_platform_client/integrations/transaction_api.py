@@ -18,7 +18,7 @@ def get_transactions_by_address(chain_id: str, address: str, session: str, limit
     """
     url = f"{API_URL}/transaction/{chain_id}/address?address={address}&session={session}&limit={limit}&apiKey={api_key}"
 
-    response = requests.get(url, headers={'Content-Type': 'application/json'})
+    response = requests.get(url, headers={'Content-Type': 'application/json'}, timeout=15)
 
     if response.status_code not in (200, 201):
         error_body = response.json()
@@ -42,7 +42,7 @@ def get_transaction_by_hash(chain_id: str, tx_hash: str, api_key: str) -> ApiRes
     """
     url = f"{API_URL}/transaction/{chain_id}/tx-hash?txHash={tx_hash}&apiKey={api_key}"
 
-    response = requests.get(url, headers={'Content-Type': 'application/json'})
+    response = requests.get(url, headers={'Content-Type': 'application/json'}, timeout=15)
 
     if response.status_code not in (200, 201):
         error_body = response.json()
@@ -66,7 +66,7 @@ def get_transaction_status(chain_id: str, tx_hash: str, api_key: str) -> ApiResp
     """
     url = f"{API_URL}/transaction/{chain_id}/status?txHash={tx_hash}&apiKey={api_key}"
 
-    response = requests.get(url, headers={'Content-Type': 'application/json'})
+    response = requests.get(url, headers={'Content-Type': 'application/json'}, timeout=15)
 
     if response.status_code not in (200, 201):
         error_body = response.json()

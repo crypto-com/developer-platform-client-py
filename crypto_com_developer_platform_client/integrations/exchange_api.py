@@ -13,7 +13,7 @@ def get_all_tickers() -> ApiResponse:
     """
     url = f"{API_URL}/exchange/tickers"
 
-    response = requests.get(url, headers={'Content-Type': 'application/json'})
+    response = requests.get(url, headers={'Content-Type': 'application/json'}, timeout=15)
 
     if response.status_code not in (200, 201):
         error_body = response.json()
@@ -36,7 +36,7 @@ def get_ticker_by_instrument(instrument_name: str) -> ApiResponse:
     """
     url = f"{API_URL}/exchange/tickers/{instrument_name}"
 
-    response = requests.get(url, headers={'Content-Type': 'application/json'})
+    response = requests.get(url, headers={'Content-Type': 'application/json'}, timeout=15)
 
     if response.status_code not in (200, 201):
         error_body = response.json()

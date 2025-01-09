@@ -24,7 +24,7 @@ class CronosId:
         """
         Resolves a CronosId to its corresponding blockchain address.
 
-        :param name: The CronosId name to resolve
+        :param name: The CronosId name to resolve (CronosIds with the `.cro` suffix are supported, e.g. `xyz.cro`)
         :return: Response containing the resolved blockchain address
         """
         chain_id = cls._client.get_chain_id()

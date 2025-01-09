@@ -17,7 +17,7 @@ def resolve_name(chain_id: str, name: str) -> ApiResponse:
 
     try:
         response = requests.get(
-            url, headers={"Content-Type": "application/json"})
+            url, headers={"Content-Type": "application/json"}, timeout=15)
         response.raise_for_status()
         return response.json()
     except requests.RequestException as e:
@@ -43,7 +43,7 @@ def lookup_address(chain_id: str, address: str) -> ApiResponse:
 
     try:
         response = requests.get(
-            url, headers={"Content-Type": "application/json"})
+            url, headers={"Content-Type": "application/json"}, timeout=15)
         response.raise_for_status()
         return response.json()
     except requests.RequestException as e:

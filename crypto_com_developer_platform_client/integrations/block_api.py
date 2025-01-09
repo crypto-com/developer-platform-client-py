@@ -18,7 +18,7 @@ def get_block_by_tag(chain_id: str, api_key: str, block_tag: str, tx_detail: str
     """
     url = f"{API_URL}/block/{chain_id}/block-tag?blockTag={block_tag}&txDetail={tx_detail}&apiKey={api_key}"
 
-    response = requests.get(url, headers={'Content-Type': 'application/json'})
+    response = requests.get(url, headers={'Content-Type': 'application/json'}, timeout=15)
 
     if response.status_code not in (200, 201):
         error_body = response.json()

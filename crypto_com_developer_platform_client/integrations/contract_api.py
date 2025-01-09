@@ -17,7 +17,7 @@ def get_contract_abi(chain_id: str, api_key: str, contract_address: str) -> ApiR
     """
     url = f"{API_URL}/contract/{chain_id}/contract-abi?contractAddress={contract_address}&apiKey={api_key}"
 
-    response = requests.get(url, headers={'Content-Type': 'application/json'})
+    response = requests.get(url, headers={'Content-Type': 'application/json'}, timeout=15)
 
     if response.status_code not in (200, 201):
         error_body = response.json()
