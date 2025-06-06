@@ -1,6 +1,6 @@
 from .client import Client
 from .integrations.api_interfaces import ApiResponse
-from .integrations.cronosid_api import lookup_address, resolve_name
+from .integrations.cronosid_api import lookup_cronos_id, resolve_cronos_id
 
 
 class CronosId:
@@ -27,8 +27,10 @@ class CronosId:
         :param name: The CronosId name to resolve (CronosIds with the `.cro` suffix are supported, e.g. `xyz.cro`)
         :return: Response containing the resolved blockchain address
         """
-        chain_id = cls._client.get_chain_id()
-        return resolve_name(chain_id, name)
+        if cls._client is None:
+            raise ValueError("Network class not initialized with a Client instance.")
+
+        return resolve_cronos_id(name)
 
     @classmethod
     def lookup_address(cls, address: str) -> ApiResponse:
@@ -38,5 +40,7 @@ class CronosId:
         :param address: The blockchain address to lookup
         :return: Response containing the CronosId name
         """
-        chain_id = cls._client.get_chain_id()
-        return lookup_address(chain_id, address)
+        if cls._client is None:
+            raise ValueError("Network class not initialized with a Client instance.")
+
+        return lookup_cronos_id(cls._client.get_api_key(), address)

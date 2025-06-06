@@ -1,56 +1,59 @@
 import requests
-
 from ..constants import API_URL
 from .api_interfaces import ApiResponse
 
 
-def resolve_name(chain_id: str, name: str) -> ApiResponse:
+def resolve_cronos_id(api_key: str, name: str) -> ApiResponse:
     """
-    Resolves a CronosId to its corresponding blockchain address.
+    Resolve a Cronos ID name (e.g., 'test.cro') to its associated address.
 
-    :param chain_id: The ID of the blockchain network
-    :param name: The CronosId to resolve
-    :return: Response containing the resolved blockchain address
-    :raises Exception: If the API request fails or returns an error
+    :param api_key: The API key for authentication.
+    :param name: The Cronos ID name.
+    :return: The associated address and resolution metadata.
+    :rtype: ApiResponse
+    :raises Exception: If the resolution fails or the server returns an error.
     """
-    url = f"{API_URL}/cronosid/resolve/{name}?chainId={chain_id}"
+    url = f"{API_URL}/cronosid/resolve/{name}"
 
-    try:
-        response = requests.get(
-            url, headers={"Content-Type": "application/json"}, timeout=15)
-        response.raise_for_status()
-        return response.json()
-    except requests.RequestException as e:
-        error_message = str(e)
-        if hasattr(e, 'response') and e.response is not None:
-            if e.response.status_code not in (200, 201):
-                error_body = e.response.json()
-                error_message = error_body.get('error') or f"HTTP error! status: {
-                    e.response.status_code}"
-        raise Exception(f"Failed to resolve name: {error_message}")
+    response = requests.get(
+        url,
+        headers={"Content-Type": "application/json", "x-api-key": api_key},
+        timeout=15,
+    )
+
+    if response.status_code not in (200, 201):
+        error_body = response.json()
+        server_error_message = (
+            error_body.get("error") or f"HTTP error! status: {response.status_code}"
+        )
+        raise Exception(server_error_message)
+
+    return response.json()
 
 
-def lookup_address(chain_id: str, address: str) -> ApiResponse:
+def lookup_cronos_id(api_key: str, address: str) -> ApiResponse:
     """
-    Looks up an address to find its associated CronosId.
+    Lookup a Cronos ID by wallet address.
 
-    :param chain_id: The ID of the blockchain network
-    :param address: The blockchain address to lookup
-    :return: Response containing the CronosId name
-    :raises Exception: If the API request fails or returns an error
+    :param api_key: The API key for authentication.
+    :param address: The wallet address.
+    :return: The Cronos ID associated with the address.
+    :rtype: ApiResponse
+    :raises Exception: If the lookup fails or the server returns an error.
     """
-    url = f"{API_URL}/cronosid/lookup/{address}?chainId={chain_id}"
+    url = f"{API_URL}/cronosid/lookup/{address}"
 
-    try:
-        response = requests.get(
-            url, headers={"Content-Type": "application/json"}, timeout=15)
-        response.raise_for_status()
-        return response.json()
-    except requests.RequestException as e:
-        error_message = str(e)
-        if hasattr(e, 'response') and e.response is not None:
-            if e.response.status_code not in (200, 201):
-                error_body = e.response.json()
-                error_message = error_body.get('error') or f"HTTP error! status: {
-                    e.response.status_code}"
-        raise Exception(f"Failed to lookup address: {error_message}")
+    response = requests.get(
+        url,
+        headers={"Content-Type": "application/json", "x-api-key": api_key},
+        timeout=15,
+    )
+
+    if response.status_code not in (200, 201):
+        error_body = response.json()
+        server_error_message = (
+            error_body.get("error") or f"HTTP error! status: {response.status_code}"
+        )
+        raise Exception(server_error_message)
+
+    return response.json()

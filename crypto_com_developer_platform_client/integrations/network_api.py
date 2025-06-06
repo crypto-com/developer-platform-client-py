@@ -1,20 +1,18 @@
 import requests
-
 from ..constants import API_URL
 from .api_interfaces import ApiResponse
 
 
-def get_whitelisted_tokens(project: str, api_key: str) -> ApiResponse:
+def get_network_info(api_key: str) -> ApiResponse:
     """
-    Get whitelisted tokens for a specific DeFi project.
+    Fetch general network information.
 
-    :param project: The DeFi project name
-    :param api_key: The API key for authentication
-    :return: List of whitelisted tokens
-    :raises Exception: If the request fails or server responds with an error
+    :param api_key: The API key for authentication.
+    :return: The network information.
+    :rtype: ApiResponse
+    :raises Exception: If the request fails or the server returns an error.
     """
-    url = f"{API_URL}/defi/whitelisted-tokens/{project}?apiKey={api_key}"
-
+    url = f"{API_URL}/network/info"
     response = requests.get(
         url,
         headers={"Content-Type": "application/json", "x-api-key": api_key},
@@ -31,17 +29,16 @@ def get_whitelisted_tokens(project: str, api_key: str) -> ApiResponse:
     return response.json()
 
 
-def get_all_farms(project: str, api_key: str) -> ApiResponse:
+def get_chain_id(api_key: str) -> ApiResponse:
     """
-    Get all farms for a specific DeFi project.
+    Fetch the network's chain ID.
 
-    :param project: The DeFi project name
-    :param api_key: The API key for authentication
-    :return: List of all farms
-    :raises Exception: If the request fails or server responds with an error
+    :param api_key: The API key for authentication.
+    :return: The chain ID of the network.
+    :rtype: ApiResponse
+    :raises Exception: If the request fails or the server returns an error.
     """
-    url = f"{API_URL}/defi/farms/{project}?apiKey={api_key}"
-
+    url = f"{API_URL}/network/chain-id"
     response = requests.get(
         url,
         headers={"Content-Type": "application/json", "x-api-key": api_key},
@@ -58,18 +55,16 @@ def get_all_farms(project: str, api_key: str) -> ApiResponse:
     return response.json()
 
 
-def get_farm_by_symbol(project: str, symbol: str, api_key: str) -> ApiResponse:
+def get_client_version(api_key: str) -> ApiResponse:
     """
-    Get specific farm information by symbol for a DeFi project.
+    Fetch the client version of the connected node.
 
-    :param project: The DeFi project name
-    :param symbol: The farm symbol
-    :param api_key: The API key for authentication
-    :return: Information about the specific farm
-    :raises Exception: If the request fails or server responds with an error
+    :param api_key: The API key for authentication.
+    :return: The client version string.
+    :rtype: ApiResponse
+    :raises Exception: If the request fails or the server returns an error.
     """
-    url = f"{API_URL}/defi/farms/{project}/{symbol}?apiKey={api_key}"
-
+    url = f"{API_URL}/network/client-version"
     response = requests.get(
         url,
         headers={"Content-Type": "application/json", "x-api-key": api_key},

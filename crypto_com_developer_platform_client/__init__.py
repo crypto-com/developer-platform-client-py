@@ -1,6 +1,8 @@
 from .block import Block
 from .client import Client
 from .contract import Contract
+from .event import Event
+from .network import Network
 from .cronosid import CronosId
 from .defi import Defi
 from .exchange import Exchange
@@ -13,6 +15,8 @@ from .wallet import Wallet
 __all__ = [
     "Client",
     "Contract",
+    "Event",
+    "Network",
     "Wallet",
     "Block",
     "Transaction",
