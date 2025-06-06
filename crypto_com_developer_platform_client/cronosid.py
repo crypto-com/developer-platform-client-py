@@ -30,7 +30,7 @@ class CronosId:
         if cls._client is None:
             raise ValueError("Network class not initialized with a Client instance.")
 
-        return resolve_cronos_id(name)
+        return resolve_cronos_id(cls._client.get_api_key(), name)
 
     @classmethod
     def lookup_address(cls, address: str) -> ApiResponse:
