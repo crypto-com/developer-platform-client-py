@@ -4,11 +4,10 @@ class Client:
     """
 
     _api_key: str
-    _chain_id: str
     _provider: str
 
     @classmethod
-    def init(cls, api_key: str, chain_id: str, provider: str = "") -> None:
+    def init(cls, api_key: str, provider: str = "") -> None:
         """
         Initialize the client with API key and chain ID. Provider is optional.
 
@@ -17,11 +16,12 @@ class Client:
         """
 
         cls._api_key = api_key
-        cls._chain_id = chain_id
         cls._provider = provider
 
         from .block import Block
         from .contract import Contract
+        from .network import Network
+        from .event import Event
         from .cronosid import CronosId
         from .defi import Defi
         from .exchange import Exchange
@@ -30,6 +30,8 @@ class Client:
         from .wallet import Wallet
 
         Contract.init(cls())
+        Event.init(cls())
+        Network.init(cls())
         Wallet.init(cls())
         Block.init(cls())
         Transaction.init(cls())
@@ -50,19 +52,6 @@ class Client:
             raise ValueError("API key is not set. Please set the API key.")
 
         return cls._api_key
-
-    @classmethod
-    def get_chain_id(cls) -> str:
-        """
-        Get the chain ID.
-
-        :return: The chain ID.
-        :raises ValueError: If the chain ID is not set.
-        """
-        if cls._chain_id is None:
-            raise ValueError("Chain ID is not set. Please set the chain ID.")
-
-        return cls._chain_id
 
     @classmethod
     def get_provider(cls) -> str:
