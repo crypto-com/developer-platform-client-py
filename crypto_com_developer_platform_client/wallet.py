@@ -24,18 +24,24 @@ class Wallet:
         """
         Create a new wallet.
 
+        :raises ValueError: If the Wallet class is not initialized with a Client instance.
         :return: The address of the new wallet.
         """
-        return create_wallet()
+        if cls._client is None:
+            raise ValueError("Wallet class not initialized with a Client instance.")
+
+        return create_wallet(cls._client.get_api_key())
 
     @classmethod
-    def get_balance(cls, address: str) -> ApiResponse:
+    def get_balance(cls, wallet_address: str) -> ApiResponse:
         """
         Get the balance of a wallet.
 
-        :param address: The address to get the balance for (CronosIds with the `.cro` suffix are supported, e.g. `xyz.cro`)
+        :param wallet_address: The address to get the balance for (CronosIds with the `.cro` suffix are supported, e.g. `xyz.cro`)
+        :raises ValueError: If the Wallet class is not initialized with a Client instance.
         :return: The balance of the wallet.
         """
-        chain_id = cls._client.get_chain_id()
-        api_key = cls._client.get_api_key()
-        return get_balance(chain_id, address, api_key)
+        if cls._client is None:
+            raise ValueError("Wallet class not initialized with a Client instance.")
+
+        return get_balance(cls._client.get_api_key(), wallet_address)

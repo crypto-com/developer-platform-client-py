@@ -22,12 +22,12 @@ class Contract:
         cls._client = client
 
     @classmethod
-    def get_contract_abi(cls, contract_address: str, explorerKey: str) -> ApiResponse:
+    def get_contract_abi(cls, contract_address: str, explorer_key: str) -> ApiResponse:
         """
         Get the ABI for a smart contract.
 
         :param contract_address: The address of the smart contract.
-        :param explorerKey: The API key for the blockchain explorer (either Cronos or Cronos zkEVM).
+        :param explorer_key: The API key for the blockchain explorer (either Cronos or Cronos zkEVM).
         :raises ValueError: If the Contract class is not initialized with a Client instance.
         :return: The ABI of the smart contract.
         """
@@ -35,7 +35,7 @@ class Contract:
             raise ValueError("Contract class not initialized with a Client instance.")
 
         return get_contract_abi(
-            cls._client.get_api_key(), contract_address, explorerKey
+            cls._client.get_api_key(), contract_address, explorer_key
         )
 
     @classmethod

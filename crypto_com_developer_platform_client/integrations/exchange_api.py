@@ -15,10 +15,6 @@ def get_all_tickers(api_key: str) -> ApiResponse:
     url = f"{API_URL}/exchange/tickers"
 
     response = requests.get(
-        url, headers={"Content-Type": "application/json"}, timeout=15
-    )
-
-    response = requests.get(
         url,
         headers={"Content-Type": "application/json", "x-api-key": api_key},
         timeout=15,
