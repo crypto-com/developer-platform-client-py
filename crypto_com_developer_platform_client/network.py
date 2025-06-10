@@ -24,6 +24,8 @@ class Network:
     def info(cls) -> ApiResponse:
         """
         Get general network info.
+
+        :raises ValueError: If the Network class is not initialized with a Client instance.
         :return: Network metadata.
         """
         if cls._client is None:
@@ -35,6 +37,8 @@ class Network:
     def chain_id(cls) -> ApiResponse:
         """
         Get the current chain ID.
+
+        :raises ValueError: If the Network class is not initialized with a Client instance.
         :return: Chain ID value.
         """
         if cls._client is None:
@@ -46,6 +50,8 @@ class Network:
     def client_version(cls) -> ApiResponse:
         """
         Get the connected node's client version.
+
+        :raises ValueError: If the Network class is not initialized with a Client instance.
         :return: Client version string.
         """
         if cls._client is None:

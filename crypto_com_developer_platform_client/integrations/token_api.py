@@ -9,7 +9,6 @@ def get_native_token_balance(api_key: str, address: str) -> ApiResponse:
     Get the native token balance for a given address.
 
     :param api_key: The API key for authentication.
-    :param api_key: The API key for authentication.
     :param address: The address to check the balance for (CronosIds with the `.cro` suffix are supported, e.g. `xyz.cro`)
     :return: The native token balance.
     :rtype: ApiResponse

@@ -4,7 +4,7 @@ from ..constants import API_URL
 from .api_interfaces import ApiResponse
 
 
-def get_all_tickers() -> ApiResponse:
+def get_all_tickers(api_key: str) -> ApiResponse:
     """
     Get all tickers from the Crypto.com Exchange (Chain agnostic).
 
@@ -34,7 +34,7 @@ def get_all_tickers() -> ApiResponse:
     return response.json()
 
 
-def get_ticker_by_instrument(instrument_name: str) -> ApiResponse:
+def get_ticker_by_instrument(api_key: str, instrument_name: str) -> ApiResponse:
     """
     Get ticker information for a specific instrument from the Crypto.com Exchange (Chain agnostic).
 

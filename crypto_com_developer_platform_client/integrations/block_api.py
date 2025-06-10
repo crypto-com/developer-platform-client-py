@@ -46,7 +46,7 @@ def get_block_by_tag(api_key: str, block_tag: str, tx_detail: str) -> ApiRespons
     :rtype: ApiResponse
     :raises Exception: If the block retrieval fails or the server responds with an error.
     """
-    url = f"{API_URL}/block//block-tag?blockTag={block_tag}&txDetail={tx_detail}"
+    url = f"{API_URL}/block/block-tag?blockTag={block_tag}&txDetail={tx_detail}"
 
     response = requests.get(
         url,

@@ -30,6 +30,6 @@ class Event:
         :return: A list of decoded contract events.
         """
         if cls._client is None:
-            raise ValueError("Network class not initialized with a Client instance.")
+            raise ValueError("Event class not initialized with a Client instance.")
 
         return get_logs(cls._client.get_api_key(), address)

@@ -27,9 +27,12 @@ class Contract:
         Get the ABI for a smart contract.
 
         :param contract_address: The address of the smart contract.
+        :param explorerKey: The API key for the blockchain explorer (either Cronos or Cronos zkEVM).
+        :raises ValueError: If the Contract class is not initialized with a Client instance.
+        :return: The ABI of the smart contract.
         """
         if cls._client is None:
-            raise ValueError("Network class not initialized with a Client instance.")
+            raise ValueError("Contract class not initialized with a Client instance.")
 
         return get_contract_abi(
             cls._client.get_api_key(), contract_address, explorerKey
@@ -41,9 +44,10 @@ class Contract:
         Get the bytecode of a smart contract.
 
         :param contract_address: The address of the smart contract.
+        :raises ValueError: If the Contract class is not initialized with a Client instance.
         :return: The bytecode of the smart contract.
         """
         if cls._client is None:
-            raise ValueError("Network class not initialized with a Client instance.")
+            raise ValueError("Contract class not initialized with a Client instance.")
 
         return get_contract_code(cls._client.get_api_key(), contract_address)

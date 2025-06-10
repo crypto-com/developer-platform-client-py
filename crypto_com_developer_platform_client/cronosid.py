@@ -28,7 +28,7 @@ class CronosId:
         :return: Response containing the resolved blockchain address
         """
         if cls._client is None:
-            raise ValueError("Network class not initialized with a Client instance.")
+            raise ValueError("CronosId class not initialized with a Client instance.")
 
         return resolve_cronos_id(cls._client.get_api_key(), name)
 
@@ -41,6 +41,6 @@ class CronosId:
         :return: Response containing the CronosId name
         """
         if cls._client is None:
-            raise ValueError("Network class not initialized with a Client instance.")
+            raise ValueError("CronosId class not initialized with a Client instance.")
 
         return lookup_cronos_id(cls._client.get_api_key(), address)
