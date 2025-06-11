@@ -13,6 +13,7 @@ def get_network_info(api_key: str) -> ApiResponse:
     :raises Exception: If the request fails or the server returns an error.
     """
     url = f"{API_URL}/network/info"
+
     response = requests.get(
         url,
         headers={"Content-Type": "application/json", "x-api-key": api_key},
@@ -39,6 +40,7 @@ def get_chain_id(api_key: str) -> ApiResponse:
     :raises Exception: If the request fails or the server returns an error.
     """
     url = f"{API_URL}/network/chain-id"
+
     response = requests.get(
         url,
         headers={"Content-Type": "application/json", "x-api-key": api_key},

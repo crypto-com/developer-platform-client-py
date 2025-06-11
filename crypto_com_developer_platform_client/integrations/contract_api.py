@@ -35,20 +35,20 @@ def get_contract_code(api_key: str, contract_address: str) -> ApiResponse:
 
 
 def get_contract_abi(
-    api_key: str, contract_address: str, explorerKey: str
+    api_key: str, contract_address: str, explorer_key: str
 ) -> ApiResponse:
     """
     Get the ABI for a smart contract.
 
-    :param chain_id: The ID of the blockchain network
     :param api_key: The API key for authentication.
     :param contract_address: The address of the smart contract.
+    :param explorer_key: The API key for the blockchain explorer (either Cronos or Cronos zkEVM).
     :return: The ABI of the smart contract.
     :rtype: ApiResponse
     :raises Exception: If the contract ABI retrieval fails or the server responds with an error.
     """
 
-    url = f"{API_URL}/contract/contract-abi?contractAddress={contract_address}&explorerKey={explorerKey}"
+    url = f"{API_URL}/contract/contract-abi?contractAddress={contract_address}&explorerKey={explorer_key}"
 
     response = requests.get(
         url,
