@@ -1,6 +1,8 @@
 import requests
+
 from ..constants import API_URL
 from .api_interfaces import ApiResponse
+from .api_utils import handle_api_error
 
 
 def get_contract_code(api_key: str, contract_address: str) -> ApiResponse:
@@ -25,11 +27,7 @@ def get_contract_code(api_key: str, contract_address: str) -> ApiResponse:
     )
 
     if response.status_code not in (200, 201):
-        error_body = response.json()
-        server_error_message = (
-            error_body.get("error") or f"HTTP error! status: {response.status_code}"
-        )
-        raise Exception(server_error_message)
+        handle_api_error(response)
 
     return response.json()
 
@@ -60,10 +58,6 @@ def get_contract_abi(
     )
 
     if response.status_code not in (200, 201):
-        error_body = response.json()
-        server_error_message = (
-            error_body.get("error") or f"""HTTP error! status: {response.status_code}"""
-        )
-        raise Exception(server_error_message)
+        handle_api_error(response)
 
     return response.json()

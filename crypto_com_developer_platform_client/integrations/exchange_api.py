@@ -2,6 +2,7 @@ import requests
 
 from ..constants import API_URL
 from .api_interfaces import ApiResponse
+from .api_utils import handle_api_error
 
 
 def get_all_tickers(api_key: str) -> ApiResponse:
@@ -21,11 +22,7 @@ def get_all_tickers(api_key: str) -> ApiResponse:
     )
 
     if response.status_code not in (200, 201):
-        error_body = response.json()
-        server_error_message = (
-            error_body.get("error") or f"HTTP error! status: {response.status_code}"
-        )
-        raise Exception(server_error_message)
+        handle_api_error(response)
 
     return response.json()
 
@@ -48,10 +45,6 @@ def get_ticker_by_instrument(api_key: str, instrument_name: str) -> ApiResponse:
     )
 
     if response.status_code not in (200, 201):
-        error_body = response.json()
-        server_error_message = (
-            error_body.get("error") or f"HTTP error! status: {response.status_code}"
-        )
-        raise Exception(server_error_message)
+        handle_api_error(response)
 
     return response.json()

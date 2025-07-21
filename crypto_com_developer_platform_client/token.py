@@ -1,16 +1,16 @@
 from .client import Client
 from .integrations.api_interfaces import ApiResponse
 from .integrations.token_api import (
+    get_erc20_metadata,
     get_erc20_token_balance,
+    get_erc721_metadata,
+    get_erc721_token_balance,
     get_native_token_balance,
+    get_token_owner,
+    get_token_uri,
     swap_token,
     transfer_token,
     wrap_token,
-    get_erc721_token_balance,
-    get_token_owner,
-    get_token_uri,
-    get_erc721_metadata,
-    get_erc20_metadata,
 )
 
 
@@ -61,7 +61,10 @@ class Token:
             raise ValueError("Token class not initialized with a Client instance.")
 
         return get_erc20_token_balance(
-            cls._client.get_api_key(), wallet_address, contract_address, block_height
+            cls._client.get_api_key(),
+            wallet_address,
+            contract_address,
+            block_height,
         )
 
     @classmethod
