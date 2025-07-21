@@ -3,8 +3,8 @@ from typing import Any, Dict, TypedDict
 
 
 class Status(str, Enum):
-    SUCCESS = 'Success'
-    FAILED = 'Failed'
+    SUCCESS = "Success"
+    FAILED = "Failed"
 
 
 class ApiResponse(TypedDict):

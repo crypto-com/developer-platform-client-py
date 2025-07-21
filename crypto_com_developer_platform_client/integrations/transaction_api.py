@@ -1,5 +1,6 @@
 from typing import Optional
 from urllib.parse import urlencode
+
 import requests
 
 from ..constants import API_URL

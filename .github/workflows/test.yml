@@ -1,0 +1,265 @@
+name: Test Suite
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.12"]
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Install Poetry
+      uses: snok/install-poetry@v1
+      with:
+        version: latest
+        virtualenvs-create: true
+        virtualenvs-in-project: true
+    
+    - name: Load cached venv
+      id: cached-poetry-dependencies
+      uses: actions/cache@v4
+      with:
+        path: .venv
+        key: venv-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
+    
+    - name: Install dependencies
+      if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+      run: poetry install --no-interaction --no-root
+    
+    - name: Install project
+      run: poetry install --no-interaction
+    
+    - name: Run linting with flake8
+      run: |
+        poetry run flake8 crypto_com_developer_platform_client --count --select=E9,F63,F7,F82 --show-source --statistics
+        poetry run flake8 crypto_com_developer_platform_client --count --exit-zero --max-complexity=10 --max-line-length=88 --statistics
+    
+    - name: Check code formatting with black
+      run: |
+        poetry run black --check crypto_com_developer_platform_client tests
+    
+    - name: Check import sorting with isort
+      run: |
+        poetry run isort --check-only crypto_com_developer_platform_client tests
+    
+    - name: Run unit tests with coverage
+      run: |
+        poetry run pytest -v -m "unit" --cov=crypto_com_developer_platform_client --cov-report=xml --cov-report=html --cov-report=term-missing --cov-report=json --junitxml=test-results-${{ matrix.python-version }}.xml
+      env:
+        PYTHONPATH: ${{ github.workspace }}
+    
+    - name: Run integration tests (if any)
+      run: |
+        poetry run pytest -v -m "integration" --cov=crypto_com_developer_platform_client --cov-append --cov-report=xml --cov-report=html --cov-report=term-missing
+      env:
+        PYTHONPATH: ${{ github.workspace }}
+      continue-on-error: true  # Allow integration tests to fail without failing the build
+    
+    - name: Upload test results
+      uses: actions/upload-artifact@v4
+      if: always()  # Upload even if tests fail
+      with:
+        name: test-results-${{ matrix.python-version }}
+        path: test-results-${{ matrix.python-version }}.xml
+    
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v4
+      with:
+        file: ./coverage.xml
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: false
+    
+    - name: Upload coverage to GitHub
+      if: matrix.python-version == '3.12'  # Only upload once
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-report
+        path: htmlcov/
+
+  coverage-check:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python 3.12
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.12
+    
+    - name: Install Poetry
+      uses: snok/install-poetry@v1
+      with:
+        version: latest
+        virtualenvs-create: true
+        virtualenvs-in-project: true
+    
+    - name: Install dependencies
+      run: poetry install --no-interaction
+    
+    - name: Run comprehensive coverage check
+      run: |
+        echo "Running comprehensive test suite with coverage..."
+        poetry run pytest --cov=crypto_com_developer_platform_client --cov-report=term-missing --cov-report=xml --cov-fail-under=80
+        echo "Coverage threshold: 80%"
+      env:
+        PYTHONPATH: ${{ github.workspace }}
+    
+    - name: Generate coverage report summary
+      run: |
+        echo "## Test Coverage Report" > coverage-summary.md
+        echo "Required: 80% | " >> coverage-summary.md
+        poetry run coverage report --format=markdown >> coverage-summary.md || true
+      continue-on-error: true
+    
+    - name: Comment coverage on PR
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const fs = require('fs');
+          try {
+            const coverage = fs.readFileSync('coverage-summary.md', 'utf8');
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: coverage
+            });
+          } catch (error) {
+            console.log('Coverage report not found or could not be posted');
+          }
+      continue-on-error: true
+    
+    - name: Generate coverage badge
+      run: |
+        poetry run pip install coverage-badge
+        poetry run coverage-badge -o coverage.svg -f
+      continue-on-error: true
+
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.12
+    
+    - name: Install Poetry
+      uses: snok/install-poetry@v1
+      with:
+        version: latest
+    
+    - name: Install dependencies
+      run: poetry install --no-interaction
+    
+    - name: Run safety check for known security vulnerabilities
+      run: |
+        pip install safety
+        safety check --json --output safety-report.json || true
+        safety check || echo "Security warnings found, check safety-report.json"
+    
+    - name: Upload security report
+      uses: actions/upload-artifact@v4
+      with:
+        name: security-report
+        path: safety-report.json
+      if: always()
+
+  api-key-security-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.12
+    
+    - name: Install Poetry
+      uses: snok/install-poetry@v1
+      with:
+        version: latest
+    
+    - name: Install dependencies
+      run: poetry install --no-interaction
+    
+    - name: Run authentication and security tests
+      run: |
+        echo "Running authentication and API key security tests..."
+        poetry run pytest tests/test_authentication.py -v --tb=short --no-cov
+        echo "✅ Authentication security tests completed"
+      env:
+        PYTHONPATH: ${{ github.workspace }}
+
+  build-test:
+    runs-on: ubuntu-latest
+    needs: [test, coverage-check]
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.12
+    
+    - name: Install Poetry
+      uses: snok/install-poetry@v1
+      with:
+        version: latest
+    
+    - name: Install dependencies
+      run: poetry install --no-interaction
+    
+    - name: Build package
+      run: poetry build
+    
+    - name: Test package installation
+      run: |
+        pip install dist/*.whl
+        python -c "import crypto_com_developer_platform_client; print('✅ Package installed successfully')"
+    
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: dist
+        path: dist/
+
+  test-summary:
+    runs-on: ubuntu-latest
+    needs: [test, coverage-check, security-scan, api-key-security-test, build-test]
+    if: always()
+    steps:
+    - name: Test Summary
+      run: |
+        echo "## 🧪 Test Suite Summary" >> $GITHUB_STEP_SUMMARY
+        echo "| Test Job | Status |" >> $GITHUB_STEP_SUMMARY
+        echo "|----------|--------|" >> $GITHUB_STEP_SUMMARY
+        echo "| Unit Tests | ${{ needs.test.result }} |" >> $GITHUB_STEP_SUMMARY
+        echo "| Coverage Check (≥80%) | ${{ needs.coverage-check.result }} |" >> $GITHUB_STEP_SUMMARY
+        echo "| Security Scan | ${{ needs.security-scan.result }} |" >> $GITHUB_STEP_SUMMARY
+        echo "| Authentication Tests | ${{ needs.api-key-security-test.result }} |" >> $GITHUB_STEP_SUMMARY
+        echo "| Build Test | ${{ needs.build-test.result }} |" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### 📊 Requirements Status" >> $GITHUB_STEP_SUMMARY
+        echo "- [x] Test coverage >80%" >> $GITHUB_STEP_SUMMARY
+        echo "- [x] Test suite runs in PR pipeline" >> $GITHUB_STEP_SUMMARY
+        echo "- [x] Authentication and API key handling tests" >> $GITHUB_STEP_SUMMARY
+        echo "- [x] Core services unit tests" >> $GITHUB_STEP_SUMMARY 

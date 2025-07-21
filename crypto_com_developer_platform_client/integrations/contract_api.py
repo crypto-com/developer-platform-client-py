@@ -1,4 +1,5 @@
 import requests
+
 from ..constants import API_URL
 from .api_interfaces import ApiResponse
 

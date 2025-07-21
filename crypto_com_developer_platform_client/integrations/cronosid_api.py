@@ -1,4 +1,5 @@
 import requests
+
 from ..constants import API_URL
 from .api_interfaces import ApiResponse
 
@@ -22,10 +23,13 @@ def resolve_cronos_id(api_key: str, name: str) -> ApiResponse:
     )
 
     if response.status_code not in (200, 201):
-        error_body = response.json()
-        server_error_message = (
-            error_body.get("error") or f"HTTP error! status: {response.status_code}"
-        )
+        try:
+            error_body = response.json()
+            server_error_message = (
+                error_body.get("error") or f"HTTP error! status: {response.status_code}"
+            )
+        except (ValueError, KeyError):
+            server_error_message = f"HTTP error! status: {response.status_code}"
         raise Exception(server_error_message)
 
     return response.json()
@@ -50,10 +54,13 @@ def lookup_cronos_id(api_key: str, address: str) -> ApiResponse:
     )
 
     if response.status_code not in (200, 201):
-        error_body = response.json()
-        server_error_message = (
-            error_body.get("error") or f"HTTP error! status: {response.status_code}"
-        )
+        try:
+            error_body = response.json()
+            server_error_message = (
+                error_body.get("error") or f"HTTP error! status: {response.status_code}"
+            )
+        except (ValueError, KeyError):
+            server_error_message = f"HTTP error! status: {response.status_code}"
         raise Exception(server_error_message)
 
     return response.json()

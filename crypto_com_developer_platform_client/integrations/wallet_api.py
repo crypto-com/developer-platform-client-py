@@ -22,10 +22,14 @@ def create_wallet(api_key: str) -> ApiResponse:
     )
 
     if response.status_code not in (200, 201):
-        error_body = response.json()
-        server_error_message = (
-            error_body.get("error") or f"HTTP error! status: {response.status_code}"
-        )
+        try:
+            error_body = response.json()
+            server_error_message = (
+                error_body.get("error") or f"HTTP error! status: {response.status_code}"
+            )
+        except ValueError:
+            # Handle non-JSON error responses
+            server_error_message = f"HTTP error! status: {response.status_code}"
         raise Exception(server_error_message)
 
     return response.json()
@@ -50,10 +54,14 @@ def get_balance(api_key: str, wallet_address: str) -> ApiResponse:
     )
 
     if response.status_code not in (200, 201):
-        error_body = response.json()
-        server_error_message = (
-            error_body.get("error") or f"HTTP error! status: {response.status_code}"
-        )
+        try:
+            error_body = response.json()
+            server_error_message = (
+                error_body.get("error") or f"HTTP error! status: {response.status_code}"
+            )
+        except ValueError:
+            # Handle non-JSON error responses
+            server_error_message = f"HTTP error! status: {response.status_code}"
         raise Exception(server_error_message)
 
     return response.json()

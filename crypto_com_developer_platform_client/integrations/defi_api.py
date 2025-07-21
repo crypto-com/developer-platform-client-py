@@ -22,10 +22,13 @@ def get_whitelisted_tokens(project: str, api_key: str) -> ApiResponse:
     )
 
     if response.status_code not in (200, 201):
-        error_body = response.json()
-        server_error_message = (
-            error_body.get("error") or f"HTTP error! status: {response.status_code}"
-        )
+        try:
+            error_body = response.json()
+            server_error_message = (
+                error_body.get("error") or f"HTTP error! status: {response.status_code}"
+            )
+        except (ValueError, KeyError):
+            server_error_message = f"HTTP error! status: {response.status_code}"
         raise Exception(server_error_message)
 
     return response.json()
@@ -49,10 +52,13 @@ def get_all_farms(project: str, api_key: str) -> ApiResponse:
     )
 
     if response.status_code not in (200, 201):
-        error_body = response.json()
-        server_error_message = (
-            error_body.get("error") or f"HTTP error! status: {response.status_code}"
-        )
+        try:
+            error_body = response.json()
+            server_error_message = (
+                error_body.get("error") or f"HTTP error! status: {response.status_code}"
+            )
+        except (ValueError, KeyError):
+            server_error_message = f"HTTP error! status: {response.status_code}"
         raise Exception(server_error_message)
 
     return response.json()
@@ -77,10 +83,13 @@ def get_farm_by_symbol(project: str, symbol: str, api_key: str) -> ApiResponse:
     )
 
     if response.status_code not in (200, 201):
-        error_body = response.json()
-        server_error_message = (
-            error_body.get("error") or f"HTTP error! status: {response.status_code}"
-        )
+        try:
+            error_body = response.json()
+            server_error_message = (
+                error_body.get("error") or f"HTTP error! status: {response.status_code}"
+            )
+        except (ValueError, KeyError):
+            server_error_message = f"HTTP error! status: {response.status_code}"
         raise Exception(server_error_message)
 
     return response.json()

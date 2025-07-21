@@ -1,7 +1,8 @@
 from typing import Optional
+
 from .client import Client
 from .integrations.api_interfaces import ApiResponse
-from .integrations.network_api import get_network_info, get_chain_id, get_client_version
+from .integrations.network_api import get_chain_id, get_client_version, get_network_info
 
 
 class Network:
