@@ -20,11 +20,11 @@ class Client:
 
         from .block import Block
         from .contract import Contract
-        from .network import Network
-        from .event import Event
         from .cronosid import CronosId
         from .defi import Defi
+        from .event import Event
         from .exchange import Exchange
+        from .network import Network
         from .token import Token
         from .transaction import Transaction
         from .wallet import Wallet
@@ -48,7 +48,7 @@ class Client:
         :return: The API key.
         :raises ValueError: If the API key is not set.
         """
-        if cls._api_key is None:
+        if not hasattr(cls, "_api_key") or cls._api_key is None:
             raise ValueError("API key is not set. Please set the API key.")
 
         return cls._api_key
@@ -60,7 +60,7 @@ class Client:
 
         :return: The provider.
         """
-        if cls._provider is None:
+        if not hasattr(cls, "_provider") or cls._provider is None:
             raise ValueError("Provider is not set. Please set the provider.")
 
         return cls._provider

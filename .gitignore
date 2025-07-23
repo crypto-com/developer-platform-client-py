@@ -121,3 +121,24 @@ coverage.xml
 *~ 
 *~
 .*.swp
+
+# Test coverage
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+coverage.svg
+.pytest_cache/
+
+# Test artifacts
+.tox/
+.cache
+nosetests.xml
+*.cover
+.hypothesis/
+
+# Virtual environments
+.venv
+venv/
+ENV/
+env/

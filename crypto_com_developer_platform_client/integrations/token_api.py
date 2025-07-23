@@ -2,6 +2,7 @@ import requests
 
 from ..constants import API_URL
 from .api_interfaces import ApiResponse
+from .api_utils import handle_api_error
 
 
 def get_native_token_balance(api_key: str, wallet_address: str) -> ApiResponse:
@@ -22,11 +23,7 @@ def get_native_token_balance(api_key: str, wallet_address: str) -> ApiResponse:
     )
 
     if response.status_code not in (200, 201):
-        error_body = response.json()
-        server_error_message = (
-            error_body.get("error") or f"HTTP error! status: {response.status_code}"
-        )
-        raise Exception(server_error_message)
+        handle_api_error(response)
 
     return response.json()
 
@@ -53,11 +50,7 @@ def get_erc20_token_balance(
     )
 
     if response.status_code not in (200, 201):
-        error_body = response.json()
-        server_error_message = (
-            error_body.get("error") or f"HTTP error! status: {response.status_code}"
-        )
-        raise Exception(server_error_message)
+        handle_api_error(response)
 
     return response.json()
 
@@ -81,11 +74,7 @@ def transfer_token(api_key: str, payload: dict) -> ApiResponse:
     )
 
     if response.status_code not in (200, 201):
-        error_body = response.json()
-        server_error_message = (
-            error_body.get("error") or f"HTTP error! status: {response.status_code}"
-        )
-        raise Exception(server_error_message)
+        handle_api_error(response)
 
     return response.json()
 
@@ -109,11 +98,7 @@ def wrap_token(api_key: str, payload: dict) -> ApiResponse:
     )
 
     if response.status_code not in (200, 201):
-        error_body = response.json()
-        server_error_message = (
-            error_body.get("error") or f"HTTP error! status: {response.status_code}"
-        )
-        raise Exception(server_error_message)
+        handle_api_error(response)
 
     return response.json()
 
@@ -137,11 +122,7 @@ def swap_token(api_key: str, payload: dict) -> ApiResponse:
     )
 
     if response.status_code not in (200, 201):
-        error_body = response.json()
-        server_error_message = (
-            error_body.get("error") or f"HTTP error! status: {response.status_code}"
-        )
-        raise Exception(server_error_message)
+        handle_api_error(response)
 
     return response.json()
 
@@ -167,11 +148,7 @@ def get_erc721_token_balance(
     )
 
     if response.status_code not in (200, 201):
-        error_body = response.json()
-        server_error_message = (
-            error_body.get("error") or f"HTTP error! status: {response.status_code}"
-        )
-        raise Exception(server_error_message)
+        handle_api_error(response)
 
     return response.json()
 
@@ -195,11 +172,7 @@ def get_token_owner(api_key: str, contract_address: str, token_id: str) -> ApiRe
     )
 
     if response.status_code not in (200, 201):
-        error_body = response.json()
-        server_error_message = (
-            error_body.get("error") or f"HTTP error! status: {response.status_code}"
-        )
-        raise Exception(server_error_message)
+        handle_api_error(response)
 
     return response.json()
 
@@ -223,11 +196,7 @@ def get_token_uri(api_key: str, contract_address: str, token_id: str) -> ApiResp
     )
 
     if response.status_code not in (200, 201):
-        error_body = response.json()
-        server_error_message = (
-            error_body.get("error") or f"HTTP error! status: {response.status_code}"
-        )
-        raise Exception(server_error_message)
+        handle_api_error(response)
 
     return response.json()
 
@@ -250,11 +219,7 @@ def get_erc721_metadata(api_key: str, contract_address: str) -> ApiResponse:
     )
 
     if response.status_code not in (200, 201):
-        error_body = response.json()
-        server_error_message = (
-            error_body.get("error") or f"HTTP error! status: {response.status_code}"
-        )
-        raise Exception(server_error_message)
+        handle_api_error(response)
 
     return response.json()
 
@@ -277,10 +242,6 @@ def get_erc20_metadata(api_key: str, contract_address: str) -> ApiResponse:
     )
 
     if response.status_code not in (200, 201):
-        error_body = response.json()
-        server_error_message = (
-            error_body.get("error") or f"HTTP error! status: {response.status_code}"
-        )
-        raise Exception(server_error_message)
+        handle_api_error(response)
 
     return response.json()

@@ -1,9 +1,11 @@
 from typing import Optional
 from urllib.parse import urlencode
+
 import requests
 
 from ..constants import API_URL
 from .api_interfaces import ApiResponse
+from .api_utils import handle_api_error
 
 
 def get_transactions_by_address(
@@ -53,11 +55,7 @@ def get_transactions_by_address(
     )
 
     if response.status_code not in (200, 201):
-        error_body = response.json()
-        server_error_message = (
-            error_body.get("error") or f"HTTP error! status: {response.status_code}"
-        )
-        raise Exception(server_error_message)
+        handle_api_error(response)
 
     return response.json()
 
@@ -81,11 +79,7 @@ def get_transaction_by_hash(api_key: str, tx_hash: str) -> ApiResponse:
     )
 
     if response.status_code not in (200, 201):
-        error_body = response.json()
-        server_error_message = (
-            error_body.get("error") or f"HTTP error! status: {response.status_code}"
-        )
-        raise Exception(server_error_message)
+        handle_api_error(response)
 
     return response.json()
 
@@ -109,11 +103,7 @@ def get_transaction_status(api_key: str, tx_hash: str) -> ApiResponse:
     )
 
     if response.status_code not in (200, 201):
-        error_body = response.json()
-        server_error_message = (
-            error_body.get("error") or f"HTTP error! status: {response.status_code}"
-        )
-        raise Exception(server_error_message)
+        handle_api_error(response)
 
     return response.json()
 
@@ -136,11 +126,7 @@ def get_transaction_count(api_key: str, wallet_address: str) -> ApiResponse:
     )
 
     if response.status_code not in (200, 201):
-        error_body = response.json()
-        server_error_message = (
-            error_body.get("error") or f"HTTP error! status: {response.status_code}"
-        )
-        raise Exception(server_error_message)
+        handle_api_error(response)
 
     return response.json()
 
@@ -162,11 +148,7 @@ def get_gas_price(api_key: str) -> ApiResponse:
     )
 
     if response.status_code not in (200, 201):
-        error_body = response.json()
-        server_error_message = (
-            error_body.get("error") or f"HTTP error! status: {response.status_code}"
-        )
-        raise Exception(server_error_message)
+        handle_api_error(response)
 
     return response.json()
 
@@ -188,11 +170,7 @@ def get_fee_data(api_key: str) -> ApiResponse:
     )
 
     if response.status_code not in (200, 201):
-        error_body = response.json()
-        server_error_message = (
-            error_body.get("error") or f"HTTP error! status: {response.status_code}"
-        )
-        raise Exception(server_error_message)
+        handle_api_error(response)
 
     return response.json()
 
@@ -216,10 +194,6 @@ def estimate_gas(api_key: str, payload: dict) -> ApiResponse:
     )
 
     if response.status_code not in (200, 201):
-        error_body = response.json()
-        server_error_message = (
-            error_body.get("error") or f"HTTP error! status: {response.status_code}"
-        )
-        raise Exception(server_error_message)
+        handle_api_error(response)
 
     return response.json()
