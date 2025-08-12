@@ -82,11 +82,6 @@ print(swap)
 ```py
 from crypto_com_developer_platform_client import Transaction
 
-transactions = Transaction.get_transactions_by_address("0xAddress", session="", limit="10")
-print(transactions)
-```
-
-```py
 tx = Transaction.get_transaction_by_hash("0xTxHash")
 print(tx)
 ```
@@ -125,11 +120,6 @@ print(estimate)
 ```py
 from crypto_com_developer_platform_client import Contract
 
-abi = Contract.get_contract_abi("0xContractAddress", "ExplorerAPIKey")
-print(abi)
-```
-
-```py
 bytecode = Contract.get_contract_code("0xContractAddress")
 print(bytecode)
 ```
@@ -217,7 +207,6 @@ print(ticker)
 
 ### Transaction
 
-- `Transaction.get_transactions_by_address(address, session='', limit='20')`: Returns transaction list for address.
 - `Transaction.get_transaction_by_hash(tx_hash)`: Returns a transaction by hash.
 - `Transaction.get_transaction_status(tx_hash)`: Returns the status of a transaction.
 - `Transaction.get_transaction_count(address)`: Returns nonce for a wallet.
@@ -227,7 +216,6 @@ print(ticker)
 
 ### Contract
 
-- `Contract.get_contract_abi(contract_address, explorer_key)`: Fetches contract ABI.
 - `Contract.get_contract_code(contract_address)`: Fetches contract bytecode.
 
 ### Block

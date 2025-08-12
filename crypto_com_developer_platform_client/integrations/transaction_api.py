@@ -8,57 +8,6 @@ from .api_interfaces import ApiResponse
 from .api_utils import handle_api_error
 
 
-def get_transactions_by_address(
-    api_key: str,
-    address: str,
-    explorer_key: str,
-    session: str,
-    limit: str,
-    start_block: Optional[int],
-    end_block: Optional[int],
-) -> ApiResponse:
-    """
-    Get transactions by address.
-
-    :param chain_id: The ID of the blockchain network
-    :param address: The address to get transactions for (CronosIds with the `.cro` suffix are supported, e.g. `xyz.cro`)
-    :param start_block: The starting block number to get transactions from. (The maximum number of blocks that can be fetched is 10,000)
-    :param end_block: The ending block number to get transactions to. (The maximum number of blocks that can be fetched is 10,000)
-    :param session: The session to get transactions for
-    :param limit: The limit of transactions to get
-    :param api_key: The API key for authentication
-    :return: The transactions for the address
-    :rtype: ApiResponse
-    """
-    params = {
-        "address": address,
-        "limit": limit,
-        "explorerKey": explorer_key,
-    }
-
-    if start_block is not None:
-        params["startBlock"] = start_block
-
-    if end_block is not None:
-        params["endBlock"] = end_block
-
-    if session:
-        params["session"] = session
-
-    query_string = urlencode(params)
-    url = f"{API_URL}/transaction/address?{query_string}"
-
-    response = requests.get(
-        url,
-        headers={"Content-Type": "application/json", "x-api-key": api_key},
-        timeout=15,
-    )
-
-    if response.status_code not in (200, 201):
-        handle_api_error(response)
-
-    return response.json()
-
 
 def get_transaction_by_hash(api_key: str, tx_hash: str) -> ApiResponse:
     """
