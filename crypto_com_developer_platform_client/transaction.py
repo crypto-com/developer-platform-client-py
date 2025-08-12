@@ -9,7 +9,6 @@ from .integrations.transaction_api import (
     get_transaction_by_hash,
     get_transaction_count,
     get_transaction_status,
-    get_transactions_by_address,
 )
 
 
@@ -28,43 +27,6 @@ class Transaction:
         :param client: An instance of the Client class.
         """
         cls._client = client
-
-    @classmethod
-    def get_transactions_by_address(
-        cls,
-        address: str,
-        explorer_key: str,
-        session: str = "",
-        limit: str = "20",
-        startBlock: Optional[int] = None,
-        endBlock: Optional[int] = None,
-    ) -> ApiResponse:
-        """
-        Get transactions by address.
-
-        :param address: The address to get transactions for (CronosIds with the `.cro` suffix are supported, e.g. `xyz.cro`)
-        :param startBlock: The starting block number to get transactions from. (The maximum number of blocks that can be fetched is 10,000)
-        :param endBlock: The ending block number to get transactions to. (The maximum number of blocks that can be fetched is 10,000)
-        :param session: The session to get transactions for
-        :param limit: The limit of transactions to get
-        :param contract_address: Optional. The contract address of the token to transfer.
-        :raises ValueError: If the Transaction class is not initialized with a Client instance.
-        :return: The transactions for the address.
-        """
-        if cls._client is None:
-            raise ValueError(
-                "Transaction class not initialized with a Client instance."
-            )
-
-        return get_transactions_by_address(
-            cls._client.get_api_key(),
-            address,
-            explorer_key,
-            startBlock,
-            endBlock,
-            session,
-            limit,
-        )
 
     @classmethod
     def get_transaction_by_hash(cls, hash: str) -> ApiResponse:
